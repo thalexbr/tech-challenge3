@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "tech-challenge3"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.40.1"
+pygwalker = "^0.4.9.13"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
+pwdlib = {extras = ["argon2"], version = "^0.2.1"}
+pyjwt = "^2.10.0"
+setuptools = "^75.5.0"
+ipykernel = "^6.29.5"
+selenium = "^4.27.1"
+chromedriver-py = "^131.0.6778.85"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,75 @@
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile-backend
+    ports:
+      - "8000:8000"
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 30s
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
+    command: ["poetry", "run", "uvicorn", "--host", "0.0.0.0", "backend.app:app"]
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile-frontend
+    ports:
+      - "80:8501"
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8501"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 30s
+    depends_on:
+      backend:
+        condition: service_completed_successfully
+    command: ["streamlit", "run", "frontend/app.py "]
+
+  # postgres:
+  #   container_name: postgres
+  #   image: postgres:latest
+  #   env_file:
+  #     - ./.env
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PW}
+  #     - POSTGRES_DB=${POSTGRES_DB} #optional (specify default database instead of $POSTGRES_DB)
+  #   volumes:
+  #     - /home/thales/postech/phase3/tech-challenge3/pgdata:/var/lib/postgresql/data 
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+  #     interval: 1s
+  #     timeout: 5s
+  #     retries: 10
+  #   ports:
+  #     - "5432:5432"
+  #   restart: always
+
+  # pgadmin:
+  #   container_name: pgadmin
+  #   image: dpage/pgadmin4:latest
+  #   env_file:
+  #     - ./.env
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=${PGADMIN_MAIL}
+  #     - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
+  #   ports:
+  #     - "5050:80"
+  #   restart: always
+
+# volumes:
+#   pgdata:
+ 
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
