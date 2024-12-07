@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+from numpy import random
 
 def getImages(movieList: list):
     
@@ -13,6 +14,7 @@ def getImages(movieList: list):
 
     for movieId in movieList:
         url = f"http://localhost:8000/api/v1/movies/image?movieId={movieId}"
+        st.write(url)
         moviePosters.append(url)
         movieTitles.append(st.session_state.df.loc[st.session_state.df['id'] == movieId, 'title'].values[0])
 
@@ -45,11 +47,11 @@ if st.button('Obter recomendações'):
         st.error("Please configure your API Keys!")
     else:
         st.write('Aqui estão suas recomendações')
-            # movieIds = st.session_state.df['id'].to_list()
-            # movieNames = st.session_state.df['title'].to_list()
-            # random_movie =  random.randint(len(movieIds)-1)
-            # print(f'ID: {movieIds[random_movie]} :: Filme: {movieNames[random_movie]}')
-            # print(len(movieIds))
-            # filmes_aleatorios = st.session_state.df['id'].sample(3).tolist()    
-            # print(filmes_aleatorios)
-            # getImages(filmes_aleatorios)
+        movieIds = st.session_state.df['id'].to_list()
+        movieNames = st.session_state.df['title'].to_list()
+        random_movie =  random.randint(len(movieIds)-1)
+        print(f'ID: {movieIds[random_movie]} :: Filme: {movieNames[random_movie]}')
+        print(len(movieIds))
+        filmes_aleatorios = st.session_state.df['id'].sample(3).tolist()    
+        print(filmes_aleatorios)
+        getImages(filmes_aleatorios)

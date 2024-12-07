@@ -5,23 +5,17 @@ import os
 sys.path.append(os.path.abspath('.'))
 
 from frontend.components.sidebar import sidebar
-# from pygwalker.api.streamlit import StreamlitRenderer
 import pandas as pd
 import streamlit as st
 import os
 import requests
-
-backend : str = os.getenv('BACKEND_HOST')
-
-if not backend:
-    backend = 'localhost'
 
 if ('df' not in st.session_state):
     filename = 'frontend/data/moviedata.json'
     if os.path.exists(filename):
         st.session_state.df = pd.read_json(filename, orient='records', lines=True)
     else:
-        url = f"http://{backend}:8000/api/v1/movies"
+        url = f"http://localhost:8000/api/v1/movies"
         payload = {}
         headers = {
         'Authorization': f'Bearer {st.session_state["OPENAI_API_KEY"]}'

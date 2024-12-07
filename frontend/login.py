@@ -19,8 +19,9 @@ password = st.text_input(
 )
 
 
-if st.button('Autenticar'):
-    url = 'http://localhost:8000/api/v1/token'
+if st.button('Login'):
+    url = f'http://backend:8000/api/v1/token'
+    print(f'URL: {url}')
     payload = { 'username' : username, 'password' : password}
     headers = {}
     response = requests.request("POST", url, headers=headers, data=payload)
